@@ -1,0 +1,25 @@
+The following represents the EBNF grammar for a very simple language, called C--:
+program ----> {stmt}
+stmt ----> var_dec ";" | assign ";" | read_stat ";" |
+write_stat ";" | if_stmt ";" | while_stmt ";"
+var_dec ----> type var
+assign ----> var "=" expr
+expr ----> add_expr
+add_expr ----> mul_expr {("+"|"-") mul_expr}
+mul_expr ----> simple_expr {("*"|"/"|"%") simple_expr }
+simple_expr ----> id | var | "(" expr ")"
+read_stat ----> "READ" "(" expr ")"
+write_stat ----> "PRINT" "(" expr ")"
+type ----> "int" | "float" | "boolean"
+id ----> intnumber | floatnumber
+intnumber ----> Digit | Digit intnumber
+floatnumber: ----> intnumber "." intnumber
+Digit ----> [0-9]+
+boolean ----> "0" | "1";
+var ----> [A-Z, a-z]+
+block ----> program [ block ]
+if_stmt ----> "if" bool_stmt ":" [block] [ "else:" [block] ] "end if"
+while_stmt ----> "while" bool_stmt "do" [block] "end while"
+bool_stmt ----> and_stmt | rel_stmt |boolean
+and_stmt ----> bool_stmt {("and"|"or") bool_stmt}
+rel_stmt ----> simple_expr (">"|"<"|">="|"==") simple_expr
